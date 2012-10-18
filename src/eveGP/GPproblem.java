@@ -10,7 +10,7 @@ public abstract class GPproblem {
      * Run once before the first generation.
      */
     public void setup () {
-	
+
     }
     
     /**
@@ -19,6 +19,12 @@ public abstract class GPproblem {
      * @return Standardized Fitness Value (0 is best)
      */
     public abstract float evaluate (/* GPtree tree */);
+	/*	
+	setVariable("X", 0); // Problem specific variable.
+		// set("Problem."+currentThread()+".X", value);
+	OR
+	setVariable("X", 0, Float.class);
+	*/
     
     /**
      * This function is run once every generation.
