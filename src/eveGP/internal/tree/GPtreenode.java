@@ -1,5 +1,6 @@
 package eveGP.internal.tree;
 
+import eveGP.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,9 +11,14 @@ import java.util.Arrays;
 class GPtreenode {
     
     public ArrayList<GPtreenode> children;
+    public GPproblem problem;
+    public GPfunction function;
+    // or static.thread0.problem
+
     
-    public GPtreenode (GPtreenode ... child) {
-	children = new ArrayList<>();
+    public GPtreenode (GPproblem problem, GPtreenode ... child) {
+        this.problem = problem;
+	children = new ArrayList<GPtreenode>();
 	children.addAll(Arrays.asList(child));
     }
 }

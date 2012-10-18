@@ -9,10 +9,10 @@ import eveGP.*;
 public class GPtree {
     public float score = Float.NaN;
     
-    private GPtreenode root = new GPtreenode();
+    private GPtreenode root = null;
     
-    public GPtree() {
-	//tree.
+    public GPtree(GPproblem p) {
+	root = new GPtreenode(p);
     }
     
     
