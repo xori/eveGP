@@ -1,6 +1,6 @@
 package eveGP;
 
-import eveGP.internal.tree.GPtree;
+import eveGP.internal.Tree;
 
 /**
  *
@@ -17,7 +17,7 @@ public class GPstat {
      * @param trees an array of all trees in this generation. Their score is
      *	    accessed via `trees[i].score`.
      */
-    public void statistics (int generation, GPtree ... trees) {
+    public void statistics (int generation, Tree ... trees) {
 	// Outputs to file.
     }
 }

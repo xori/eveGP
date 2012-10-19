@@ -1,12 +1,36 @@
 package eveGP;
 
+import eveGP.internal.Tree;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  *
  * @author Evan Verworn (4582938) <ev09qz@brocku.ca>
  */
 public abstract class GPfunction {
     private float value = Float.NaN;
-    // private ArrayList<GPfunction> parameters;
+    public ArrayList<GPfunction> parameters;
+    public String result;
+    public ArrayList<String> parameterType;
+    private Tree root; // for multi-thread.
+    public GPfunction parent;
+    public int depth;
+    // that must get set whenever a Problem wants to evaluate.
+    
+    public GPfunction (String result, String ... paramTypes) {
+        this.result = result;
+        this.parameterType = new ArrayList<String>(Arrays.asList(paramTypes));
+        this.parameters = new ArrayList<GPfunction>(parameterType.size());
+        depth = 0;
+        // this.root = root;
+    }
+    public void addChildren (GPfunction c) {
+        parameters.add(c);
+    }
+    public int numberOfParameters() {
+        return parameters.size();
+    }
     
     /**
      * Call this to evaluate a function. It takes care of caching!
@@ -25,5 +49,13 @@ public abstract class GPfunction {
      * @param children
      * @return The result of your function
      */
-    public abstract float result (GPfunction ... children);
+    public float result (GPfunction ... children){return 0;};
+    
+    /**
+     * For when outputting to a file. Something in the style of...
+     *  `( operation children[0].toString children[1].toString )`
+     * @param children
+     * @return 
+     */
+    public String toString (GPfunction ... children){return "( NOT DEFINED )";};
 }

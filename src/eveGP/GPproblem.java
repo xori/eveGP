@@ -1,10 +1,22 @@
 package eveGP;
 
+import static eveGP.internal.Parameter.*;
+
 /**
  *
  * @author Evan Verworn (4582938) <ev09qz@brocku.ca>
  */
 public abstract class GPproblem {
+    
+    private int thread;
+    
+    public GPproblem (int thread) {
+        this.thread = thread;
+    }
+    public void setVariable(String s, Object o) {
+        // This is done so we can have multi-threading.
+        set("Problem."+thread+"."+s, o);
+    }
     
     /**
      * Run once before the first generation.
