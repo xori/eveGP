@@ -1,7 +1,7 @@
 package eveGP;
 
 import static eveGP.internal.Parameter.*;
-
+import eveGP.internal.Tree;
 /**
  *
  * @author Evan Verworn (4582938) <ev09qz@brocku.ca>
@@ -30,12 +30,10 @@ public abstract class GPproblem {
      *  score (0 is best). You can get the tree's result with tree.value();
      * @return Standardized Fitness Value (0 is best)
      */
-    public abstract float evaluate (/* GPtree tree */);
+    public abstract float evaluate ( Tree tree );
 	/*	
 	setVariable("X", 0); // Problem specific variable.
 		// set("Problem."+currentThread()+".X", value);
-	OR
-	setVariable("X", 0, Float.class);
 	*/
     
     /**

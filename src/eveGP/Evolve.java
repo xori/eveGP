@@ -22,6 +22,7 @@ public class Evolve {
         int popsize = getI("population");
         int gensize = getI("generations");
         Tree current;
+	GPproblem problem = null;
         
         for (int i = 0; i < popsize; i++) {
             generations.add(breeder.createTree());
@@ -31,10 +32,11 @@ public class Evolve {
         
         for (int i = 0; i < gensize; i++) {
             set("generation", i);
-            // do tourny-selection
-            // 
+	    current = generations.get(i);
+	    current.score = problem.evaluate(current);
         }
-        
+	// sort.
+	// do tourny.
     }
     
     public static void main (String args[]) {
