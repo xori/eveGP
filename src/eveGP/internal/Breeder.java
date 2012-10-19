@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static eveGP.internal.Parameter.*;
+import java.util.Random;
 
 /**
  *
@@ -26,9 +27,27 @@ public class Breeder {
     }
     // root.result = "*" OR "Flt"
     //      "*" is default
-    
-    public void breeeed (Tree ... t) {
-        
+    // ThreadPoolExecutor
+    public void breeeed (ArrayList<Tree> t) {
+        Random gen = (Random) Parameter.get("rGenerator");	
+	int n2Select = Parameter.getI("selector.tourney");
+	int popsize  = Parameter.getI("population");
+	float mutation = Parameter.getF("mutation");
+	float crossover= Parameter.getF("crossover");
+	float r;
+	ArrayList<Tree> generated = new ArrayList<Tree>(t.size());
+	
+	for (int i = 0; i < popsize; i++) {
+	    r = gen.nextFloat();
+	    if (r < crossover) {
+		crossover(t.get(gen.nextInt(n2Select)),t.get())
+	    } else if (r >= 1-mutation) {
+		
+	    } else {
+		System.err.println("SELECTION ERROR:: Your mutation/crossover don't add up to 1");
+	    }
+	}
+	gen.nextInt(n2Select);
     }   
     
     /**
@@ -87,6 +106,7 @@ public class Breeder {
     // functions.1.params.size = 2
     
     public void crossover (Tree a, Tree b) {
+	Tree A = (Tree) a.clone();
         GPfunction aParent, bParent;
         GPfunction aSwap, bSwap;
         int tries = getI("crossover.tries");
