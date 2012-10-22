@@ -3,6 +3,8 @@ package eveGP.internal;
 import eveGP.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,13 +19,14 @@ public class Tree implements Comparable<Tree>{
     
     public Tree (GPfunction func, Tree ... children) {
        function = func;
-       this.children = new ArrayList<Tree>(Arrays.asList(children));
+       this.children = new ArrayList<>(Arrays.asList(children));
     }
     
     public Tree (GPfunction func) {
 	function = func;
     }
 
+    //TODO This is where caching will need to happen.
     public float evaluate () {
 	return function.result((Tree[]) children.toArray());
     }
@@ -43,5 +46,21 @@ public class Tree implements Comparable<Tree>{
 	else if (Math.abs(this.score) < Math.abs(o.score)) return -1;
 	else return 0;
 	// return this.score - o.score;
+    }
+    
+    @Override
+    public Object clone () {
+	Tree t = null;
+	try {
+	    t = (Tree) super.clone();
+	} catch (CloneNotSupportedException ex) {
+	    Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	t.score = this.score;
+	t.function = this.function;
+	for(Tree child : this.children) {
+	    t.addChildren((Tree) child.clone());
+	}
+	return t;
     }
 }

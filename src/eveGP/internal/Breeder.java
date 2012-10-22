@@ -52,45 +52,37 @@ public class Breeder {
     
     /**
      * //TODO randomfunc() :: This will need to have some higher chance of rolling terminals.
-     * //TODO randomfunc() is kinda hacky.
+     * //TODO randomfunc() is hacky.
      * @param result
      * @return 
      */
-    public GPfunction randomFunc (String result) {
-        GPfunction parent = null;
+    public Tree randomFunc (String result) {
+        Tree parent = null;
         
         // Some good ol' unboxing.
         int fs = (int) (float) getF("functions.length");
-        ArrayList<String> grabBag = new ArrayList<String>();
+        ArrayList<String> grabBag = new ArrayList<>();
         
         // Build a grab bag of all legal functions.
         for (int i = 0; i < fs; i++) {
-            if (getS("functions."+i+".result") == result)
+            if (getS("functions."+i+".result").equals(result))
                 grabBag.add("functions."+i);
-            else if (result == "*") // Wildcard
+            else if ("*".equals(result)) // Wildcard
                 grabBag.add("functions."+i);
         }
         
         // Pick one function out of the grab bag and init();
         String func = grabBag.get(gen.nextInt(grabBag.size()));
         GPfunction output = null;
-        try {
-            output = (GPfunction) ((Class) get(func)).newInstance();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(Breeder.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(Breeder.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+       
+	output = (GPfunction) get(func);
         
-        output.parent = parent;
-        parent = output;        
+        parent.function = output;        
         // and recurse to take care of *its* parameters.
         for (int i = 0; i < getI(func+".params.length"); i++) {
-            output.addChildren(randomFunc(output.parameterType.get(i)));
+            parent.addChildren(randomFunc(output.parameterType.get(i)));
         }
-        return output;
+        return parent;
     }
     // function evegp.add (Flt, Flt) : Flt
     // function evegp.lessThan (Flt, Flt) : Bool
@@ -105,7 +97,7 @@ public class Breeder {
     // functions.1.params = ['Flt','Flt']
     // functions.1.params.size = 2
     
-    public void crossover (Tree a, Tree b) {
+    public Tree[] crossover (Tree a, Tree b) {
 	Tree A = (Tree) a.clone();
         GPfunction aParent, bParent;
         GPfunction aSwap, bSwap;
@@ -145,43 +137,38 @@ public class Breeder {
         }
     }
     
-    public void mutate (Tree a) {
-        GPfunction t = eenyMeeny(a);
-        GPfunction parent = t.parent;
+    public Tree mutate (Tree a) {
+	Tree clone = (Tree) a.clone();
+        Tree child = eenyMeeny(clone);
         int index;
-        if (parent == null) {
-            a.root = randomFunc(t.result);
-        } else {
-            index = parent.parameters.indexOf(t);
-            parent.parameters.remove(index);
-            parent.parameters.add(index, randomFunc(t.result));
-        }
+	child = randomFunc(child.function.result);
+	return child;
     }
     
-    public int count (GPfunction a) {
+    public int count (Tree a) {
         int c = 0;
-        for(GPfunction p : a.parameters) {
+        for(Tree p : a.children) {
             c += count(p);
         }
         a.depth = ++c;
         return c;        
     }
     
-    public GPfunction eenyMeeny (Tree a) {
-        int r; count(a.root);
-        GPfunction node = a.root;
-        int sum = 0;
+    public Tree eenyMeeny (Tree a) {
+        int r; count(a);
+        Tree node = a;
+        int sum;
         do {
             r = gen.nextInt(node.depth);
             if (r == node.depth - 1) return node;
             sum = 0;
-            for(GPfunction f : node.parameters) {
+            for(Tree f : node.children) {
                 sum += f.depth;
-                if (r < sum) { node = f; sum = 0; break;}
+                if (r < sum) { 
+		    node = f; sum = 0; break;
+		}
             }
         } while(sum == 0);
         return node;
     }
-    
-    
 }
