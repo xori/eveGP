@@ -5,7 +5,6 @@ import eveGP.internal.Tree;
 import java.util.ArrayList;
 import static eveGP.internal.Parameter.*;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  *
@@ -25,28 +24,34 @@ public class Evolve {
         Tree current;
 	GPproblem problem = null;
 	
-        
+        // Create initial generation
         for (int i = 0; i < popsize; i++) {
             generations.add(breeder.createTree());
         }
         
+        // Begin training.
         System.out.println("Begin");
-        
         for (int i = 0; i < gensize; i++) {
             set("generation", i);
-	    current = generations.get(i);
-	    current.score = problem.evaluate(current);
-	    // Sort. 0 is first. eg) 0, 1, -2, 3, 3...
+            System.out.println("Generation: " + i );
+            
+            for (int j = 0; j < popsize; j++) {
+                current = generations.get(j);
+                current.score = problem.evaluate(current);
+            }
+	    // Sort. 0 is best. eg) 0, 1, -2, 3, 3...
 	    Collections.sort(generations);
-	    selector.
+            // Statistics.RunTesting(generations);
+
+            if (i != gensize-1) // Don't breed on last run.
+                // Will look to 'selector.tourney' to decide who to breed.
+                breeder.breeeed(generations);
         }
-	
+        System.out.println("Finished");
+        // Statistics.Best(generations);	
     }
     
     public static void main (String args[]) {
-	
-	
-	System.out.println("hello world.");
 	
     }
 }

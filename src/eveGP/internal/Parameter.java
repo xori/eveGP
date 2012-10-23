@@ -1,6 +1,12 @@
 package eveGP.internal;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,4 +51,43 @@ public class Parameter {
         }
         return f;
     }    
+    
+    public static void loadFile (String f) {
+        Scanner file = null;
+        String temp, value;
+        
+        try {
+            file = new Scanner(new File(f));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Parameter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while(file.hasNext()) {
+            StringTokenizer token = new StringTokenizer(file.nextLine(),":,()=");
+            temp = token.nextToken();
+            if (temp.equals("function")) {
+                // is function.                
+            } else {
+                //is parameter
+                if (token.countTokens() == 0) continue;
+                if (token.countTokens()!= 2) {
+                    System.err.println("Parameter File is incorrect.");   
+                    System.exit(1);
+                }
+                value = token.nextToken();
+                
+                try {
+                    Integer t = Integer.parseInt(value);
+                    set(temp, t);
+                } catch (NumberFormatException e) {
+                    try {
+                        Float tf = Float.parseFloat(value);
+                        set(temp, tf);
+                    } catch (NumberFormatException ex) {
+                        set(temp, value);
+                    }
+                }   
+            }
+            
+        }
+    }
 }

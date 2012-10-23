@@ -19,7 +19,7 @@ public class Tree implements Comparable<Tree>{
     
     public Tree (GPfunction func, Tree ... children) {
        function = func;
-       this.children = new ArrayList<>(Arrays.asList(children));
+       this.children = new ArrayList<Tree>(Arrays.asList(children));
     }
     
     public Tree (GPfunction func) {

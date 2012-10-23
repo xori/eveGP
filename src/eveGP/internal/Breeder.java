@@ -20,29 +20,35 @@ public class Breeder {
     }
     
     public Tree createTree () {
-        Tree output = new Tree();
+        Tree output;
         String f = getS("root.result");
-        output.root = randomFunc(f);
+        output = randomFunc(f);
         return output;
     }
     // root.result = "*" OR "Flt"
     //      "*" is default
     // ThreadPoolExecutor
-    public void breeeed (ArrayList<Tree> t) {
-        Random gen = (Random) Parameter.get("rGenerator");	
+    public void breeeed (ArrayList<Tree> t) {	
 	int n2Select = Parameter.getI("selector.tourney");
 	int popsize  = Parameter.getI("population");
 	float mutation = Parameter.getF("mutation");
 	float crossover= Parameter.getF("crossover");
 	float r;
 	ArrayList<Tree> generated = new ArrayList<Tree>(t.size());
+        Tree current, crossNode;
 	
 	for (int i = 0; i < popsize; i++) {
 	    r = gen.nextFloat();
+            current = (Tree) t.get(gen.nextInt(t.size())).clone();
 	    if (r < crossover) {
-		crossover(t.get(gen.nextInt(n2Select)),t.get())
+                crossNode = (Tree) t.get(gen.nextInt(t.size())).clone();
+                crossover(current, crossNode);
+                generated.add(current);
+                generated.add(crossNode);
+                i++; // because we made two
 	    } else if (r >= 1-mutation) {
-		
+		mutate(current);
+                generated.add(current);
 	    } else {
 		System.err.println("SELECTION ERROR:: Your mutation/crossover don't add up to 1");
 	    }
@@ -57,11 +63,11 @@ public class Breeder {
      * @return 
      */
     public Tree randomFunc (String result) {
-        Tree parent = null;
+        Tree current = null;
         
         // Some good ol' unboxing.
         int fs = (int) (float) getF("functions.length");
-        ArrayList<String> grabBag = new ArrayList<>();
+        ArrayList<String> grabBag = new ArrayList<String>();
         
         // Build a grab bag of all legal functions.
         for (int i = 0; i < fs; i++) {
@@ -75,14 +81,13 @@ public class Breeder {
         String func = grabBag.get(gen.nextInt(grabBag.size()));
         GPfunction output = null;
        
-	output = (GPfunction) get(func);
+	current = new Tree((GPfunction) get(func));
         
-        parent.function = output;        
         // and recurse to take care of *its* parameters.
         for (int i = 0; i < getI(func+".params.length"); i++) {
-            parent.addChildren(randomFunc(output.parameterType.get(i)));
+            current.addChildren(randomFunc(output.parameterType.get(i)));
         }
-        return parent;
+        return current;
     }
     // function evegp.add (Flt, Flt) : Flt
     // function evegp.lessThan (Flt, Flt) : Bool
@@ -97,54 +102,55 @@ public class Breeder {
     // functions.1.params = ['Flt','Flt']
     // functions.1.params.size = 2
     
-    public Tree[] crossover (Tree a, Tree b) {
-	Tree A = (Tree) a.clone();
-        GPfunction aParent, bParent;
-        GPfunction aSwap, bSwap;
-        int tries = getI("crossover.tries");
-        int tempIndex;
-        for (int i = 0; i < tries; i++) {
-            aSwap = eenyMeeny(a);
-            bSwap = eenyMeeny(b);
-            if (aSwap.result == bSwap.result) {
-                // Swap
-                aParent = aSwap.parent;
-                GPfunction temp = aSwap;
-                if (aParent == null) {
-                    // If root of tree;
-                    a.root = bSwap;
-                    a.root.parent = null;
-                } else {
-                    tempIndex = aParent.parameters.indexOf(aSwap);
-                    aParent.parameters.remove(tempIndex);
-                    aParent.parameters.add(tempIndex, bSwap);
-                    bSwap.parent = aParent;
-                }
-                
-                bParent = bSwap.parent;
-                if (bParent == null) {
-                    //if root of tree;
-                    b.root = aSwap;
-                    b.root.parent = null;
-                } else {
-                    tempIndex = bParent.parameters.indexOf(bSwap);
-                    bParent.parameters.remove(tempIndex);
-                    bParent.parameters.add(tempIndex, temp);
-                    temp.parent = bParent;
-                }
-                return;
-            }                
-        }
+    /**
+     * Attempts a crossover between the two trees given. Remember to clone BEFORE
+     * passing it to this function. This will(!) modify the reference!!1!!!
+     * @param a
+     * @param b
+     * @return true on success.
+     */
+    public boolean crossover (Tree a, Tree b) {
+	Tree tA, tB;
+        GPfunction tF;
+        ArrayList<Tree> tC;
+        
+        tA = eenyMeeny(a);
+        tB = eenyMeeny(b);
+        if (!tA.function.result.equals(tB.function.result))
+            return false;
+        
+        // swap functions
+        tF = tA.function;
+        tA.function = tB.function;
+        tB.function = tF;
+        
+        // swap children
+        tC = tA.children;
+        tA.children = tB.children;
+        tB.children = tC;
+        
+        return true;
     }
     
-    public Tree mutate (Tree a) {
-	Tree clone = (Tree) a.clone();
-        Tree child = eenyMeeny(clone);
-        int index;
-	child = randomFunc(child.function.result);
-	return child;
+    /**
+     * Alters the given Tree by replacing a random node. Remember to clone
+     *  **BEFORE** passing it to this function.
+     * @param a Tree to mutate.
+     * @return true if successful.
+     */
+    public boolean mutate (Tree a) {
+        Tree tA = eenyMeeny(a);
+        Tree random = randomFunc(tA.function.result);
+        tA.function = random.function;
+        tA.children = random.children;
+        return true;
     }
     
+    /**
+     * Sets the X.depth variable in every node recursivly for the given tree.
+     * @param a
+     * @return The number of nodes in this tree.
+     */
     public int count (Tree a) {
         int c = 0;
         for(Tree p : a.children) {
@@ -154,6 +160,11 @@ public class Breeder {
         return c;        
     }
     
+    /**
+     * Return a random node in the passed in Tree.
+     * @param a The tree to pick from
+     * @return the node picked.
+     */
     public Tree eenyMeeny (Tree a) {
         int r; count(a);
         Tree node = a;
