@@ -14,7 +14,7 @@ public abstract class GPproblem {
         this.thread = thread;
     }
     public void setVariable(String s, Object o) {
-        // This is done so we can have multi-threading.
+        //TODO This is done so we can have multi-threading.
         set("Problem."+thread+"."+s, o);
     }
     

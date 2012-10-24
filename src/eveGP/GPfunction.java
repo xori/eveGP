@@ -14,6 +14,8 @@ public abstract class GPfunction {
     public ArrayList<String> parameterType;
     // that must get set whenever a Problem wants to evaluate.
     
+    public GPfunction () {}
+    
     public GPfunction (String result, String ... paramTypes) {
         this.result = result;
         this.parameterType = new ArrayList<String>(Arrays.asList(paramTypes));
@@ -37,13 +39,14 @@ public abstract class GPfunction {
      * @param children
      * @return The result of your function
      */
-    public float result (Tree ... children){return 0;};
+    public abstract float result (Tree ... children);
     
     /**
      * For when outputting to a file. Something in the style of...
-     *  `( operation children[0].toString children[1].toString )`
+     *  `( operation children[0].toString() children[1].toString() )`
      * @param children
      * @return 
      */
     public String toString (Tree ... children){return "( NOT DEFINED )";};
+  
 }

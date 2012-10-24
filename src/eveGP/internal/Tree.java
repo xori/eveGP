@@ -63,4 +63,9 @@ public class Tree implements Comparable<Tree>{
 	}
 	return t;
     }
+    
+    @Override
+    public String toString () {
+        return this.function.toString((Tree[]) children.toArray());
+    }
 }

@@ -2,10 +2,7 @@ package eveGP.internal;
 
 import eveGP.GPfunction;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static eveGP.internal.Parameter.*;
-import java.util.Random;
 
 /**
  *
@@ -66,7 +63,7 @@ public class Breeder {
         Tree current = null;
         
         // Some good ol' unboxing.
-        int fs = (int) (float) getF("functions.length");
+        int fs = (int) (float) getF("functions");
         ArrayList<String> grabBag = new ArrayList<String>();
         
         // Build a grab bag of all legal functions.
@@ -79,20 +76,19 @@ public class Breeder {
         
         // Pick one function out of the grab bag and init();
         String func = grabBag.get(gen.nextInt(grabBag.size()));
-        GPfunction output = null;
        
 	current = new Tree((GPfunction) get(func));
         
         // and recurse to take care of *its* parameters.
         for (int i = 0; i < getI(func+".params.length"); i++) {
-            current.addChildren(randomFunc(output.parameterType.get(i)));
+            current.addChildren(randomFunc(current.function.parameterType.get(i)));
         }
         return current;
     }
     // function evegp.add (Flt, Flt) : Flt
     // function evegp.lessThan (Flt, Flt) : Bool
     // 
-    // functions.length = 2
+    // functions = 2
     // functions.0 = 'evegp.add'
     // functions.1 = 'evegp.lessThan'
     // functions.0.result = 'Flt'

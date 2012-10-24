@@ -1,5 +1,6 @@
 package eveGP.internal;
 
+import eveGP.GPfunction;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -52,6 +53,22 @@ public class Parameter {
         return f;
     }    
     
+    private static boolean loadClass (String classToLoad, Class sup, String placeToStore, boolean init ) {
+        Class<?> func = null;
+        try {
+            func = Class.forName(classToLoad).asSubclass(sup);
+            if (init) {
+                set(placeToStore, func.newInstance());
+            } else {
+                set(placeToStore, func);
+            }
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.toString());
+            return false;
+        }
+    }
+    
     public static void loadFile (String f) {
         Scanner file = null;
         String temp, value;
@@ -65,11 +82,32 @@ public class Parameter {
             StringTokenizer token = new StringTokenizer(file.nextLine(),":,()=");
             temp = token.nextToken();
             if (temp.equals("function")) {
-                // is function.                
+                // is function
+                if (token.countTokens() != 2) { // we need at least a class name and a return value
+                    int n = getI("functions");
+                    String index = "functions."+n;
+                    
+                    if (!loadClass(token.nextToken(), eveGP.GPfunction.class, index, true)) {
+                        // fail
+                        continue;
+                    }
+                    GPfunction tempF = (GPfunction) get(index);
+                    while(token.countTokens() > 1)
+                        tempF.parameterType.add(token.nextToken());
+                    tempF.result = token.nextToken();
+                    
+                    // Now put stats in parameter database.
+                    set(index+".result", tempF.result);
+                    set(index+".params", (String[]) tempF.parameterType.toArray());
+                    set(index+".params.size", tempF.parameterType.size());
+                    set("functions", ++n);
+                } else {
+                    System.err.println("Needed at least 3 parameters for a function. 'function <class> () : <returnType>'");
+                }
             } else {
                 //is parameter
                 if (token.countTokens() == 0) continue;
-                if (token.countTokens()!= 2) {
+                if (token.countTokens()!= 1) { // should only be one more unconsumed token.
                     System.err.println("Parameter File is incorrect.");   
                     System.exit(1);
                 }

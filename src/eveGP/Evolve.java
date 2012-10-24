@@ -51,7 +51,8 @@ public class Evolve {
         // Statistics.Best(generations);	
     }
     
-    public static void main (String args[]) {
-	
+    public static void main (String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+	Class<?> func = Class.forName("Assign2.Brightness");
+        System.out.println(((GPfunction)func.newInstance()).toString((Tree) null));
     }
 }
