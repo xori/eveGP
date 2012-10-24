@@ -30,11 +30,6 @@ public class Tree implements Comparable<Tree>{
     public float evaluate () {
 	return function.result((Tree[]) children.toArray());
     }
-    // Tree gp = new Tree(func);
-    // gp.addChildren(node);
-    // function result(Tree ... t) {
-    //	    t[0].evaluate();
-    //	    ...
     
     public void addChildren(Tree node) {
 	children.add(node);

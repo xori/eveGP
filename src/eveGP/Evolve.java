@@ -1,10 +1,15 @@
 package eveGP;
 
+import com.sun.xml.internal.ws.wsdl.writer.document.ParamType;
 import eveGP.internal.Breeder;
+import eveGP.internal.Parameter;
+import static eveGP.internal.Parameter.*;
 import eveGP.internal.Tree;
 import java.util.ArrayList;
-import static eveGP.internal.Parameter.*;
 import java.util.Collections;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,10 +24,19 @@ public class Evolve {
         generations = new ArrayList<Tree>();
         breeder = new Breeder();
         
+	loadDefaults();
+	loadFile(getS("param.file"));
+	initalize();
+	
         int popsize = getI("population");
         int gensize = getI("generations");
         Tree current;
-	GPproblem problem = null;
+	GPproblem problem;
+	try {
+	    problem = (GPproblem) ((Class) get("problem.class")).newInstance();
+	} catch (Exception ex) {
+	    System.exit(2);
+	}
 	
         // Create initial generation
         for (int i = 0; i < popsize; i++) {
@@ -51,8 +65,34 @@ public class Evolve {
         // Statistics.Best(generations);	
     }
     
-    public static void main (String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-	Class<?> func = Class.forName("Assign2.Brightness");
-        System.out.println(((GPfunction)func.newInstance()).toString((Tree) null));
+    public static void loadDefaults () {
+	set("generations", 50);
+	set("population" , 100);
+	set("functions"	 , 0);
+	set("mutation"	 , 0.1);
+	set("crossover"  , 0.9);
+	set("tourney"	 , 7);
+	Random generator = new Random();
+	int seed = generator.nextInt(1000000);
+	set("seed"	 , seed);
+	set("rGenerator" , generator);
+	set("threads"	 , 1);
+	set("problem"	 , "");
+    }   
+    public static void initalize () {
+	Random g = (Random) get("rGenerator");
+	g.setSeed(getI("seed"));
+	if ("".equals(getS("problem"))) {
+	    System.err.println("Problem not defined.");
+	    System.exit(1);
+	}
+	String c = getS("problem");
+	loadClass(c);
+    }
+    
+    public static void main (String args[]) {
+	if (args.length > 0)
+	    set("param.file", args[0]);
+	new Evolve();
     }
 }

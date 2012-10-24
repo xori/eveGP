@@ -10,6 +10,8 @@ public abstract class GPproblem {
     
     private int thread;
     
+    public GPproblem () {}
+    
     public GPproblem (int thread) {
         this.thread = thread;
     }

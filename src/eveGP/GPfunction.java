@@ -14,7 +14,10 @@ public abstract class GPfunction {
     public ArrayList<String> parameterType;
     // that must get set whenever a Problem wants to evaluate.
     
-    public GPfunction () {}
+    public GPfunction () {
+	result = "*";
+	parameterType = new ArrayList<String>();
+    }
     
     public GPfunction (String result, String ... paramTypes) {
         this.result = result;

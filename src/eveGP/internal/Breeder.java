@@ -26,7 +26,7 @@ public class Breeder {
     //      "*" is default
     // ThreadPoolExecutor
     public void breeeed (ArrayList<Tree> t) {	
-	int n2Select = Parameter.getI("selector.tourney");
+	int n2Select = Parameter.getI("tourney");
 	int popsize  = Parameter.getI("population");
 	float mutation = Parameter.getF("mutation");
 	float crossover= Parameter.getF("crossover");
