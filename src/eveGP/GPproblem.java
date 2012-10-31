@@ -41,10 +41,10 @@ public abstract class GPproblem {
     /**
      * This function is run once every generation.
      */
-    public void test (/* GPtree tree */) { }
-    
-    /**
-     * This function is run once per run on the best tree.
-     */
-    public void best (/* GPtree tree */) { }
+    public void stats ( int generation, Tree ... trees ) {
+        for (int i = 0; i < 1; i++) {
+            System.out.println(trees[i].score + " >> " + trees[i].toString());
+        }
+        
+    }
 }

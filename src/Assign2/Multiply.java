@@ -17,4 +17,11 @@ public class Multiply extends eveGP.GPfunction {
 	return sum;
     }
     
+    public String toString (Tree ... children){
+        String o = "( MULTIPLY ";
+        for (Tree t : children)
+            o += t.toString()+ " ";
+        o+= ")";
+        return o;
+    }
 }

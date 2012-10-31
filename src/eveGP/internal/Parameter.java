@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,6 +55,7 @@ public class Parameter {
     
     public static boolean loadClass (String classToLoad, Class sup, String placeToStore, boolean init ) {
         Class<?> func;
+        System.err.println(classToLoad);
         try {
             func = Class.forName(classToLoad).asSubclass(sup);
             if (init) {
@@ -81,19 +81,20 @@ public class Parameter {
         }
 	int c = 1;
         while(file.hasNext()) {
-	    System.out.println(c++);
+	    //System.out.println(c++);
             StringTokenizer token = new StringTokenizer(file.nextLine(),"\t :,()=");
             if (!token.hasMoreTokens()) continue; // blank line;
 	    temp = token.nextToken();
 	    if ("#".equals(temp)) continue;
             if ("function".equals(temp)) {
                 // is function
-                if (token.countTokens() != 2) { // we need at least a class name and a return value
+                if (token.countTokens() >= 2) { // we need at least a class name and a return value
                     int n = getI("functions");
                     String index = "functions."+n;
                     
                     if (!loadClass(token.nextToken(), eveGP.GPfunction.class, index, true)) {
                         // fail
+                        System.err.println("Failure to load class");
                         continue;
                     }
                     GPfunction tempF = (GPfunction) get(index);
@@ -108,6 +109,7 @@ public class Parameter {
                     set(index+".params.size", tempF.parameterType.size());
                     set("functions", ++n);
                 } else {
+                    System.err.println(token.nextToken()+" "+token.nextToken());
                     System.err.println("Needed at least 3 parameters for a function. 'function <class> () : <returnType>'");
                 }
             } else {
@@ -136,7 +138,7 @@ public class Parameter {
     }
     
     public static String dumpStats () {
-	String output = "";
+	String output = "->";
 	for (String s : parameter.keySet()) {
 	    output += s+": "+parameter.get(s).toString()+"\n";
 	}

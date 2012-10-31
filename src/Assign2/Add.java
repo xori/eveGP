@@ -22,4 +22,12 @@ public class Add extends eveGP.GPfunction{
 	return sum;
     }
     
+    public String toString (Tree ... children){
+        String o = "( PLUS ";
+        for (Tree t : children)
+            o += t.toString()+ " ";
+        o+= ")";
+        return o;
+    }
+    
 }

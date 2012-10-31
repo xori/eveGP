@@ -1,8 +1,10 @@
 package eveGP.internal;
 
+import java.util.List;
 import eveGP.GPfunction;
 import java.util.ArrayList;
 import static eveGP.internal.Parameter.*;
+import static java.lang.Math.*;
 
 /**
  *
@@ -25,23 +27,34 @@ public class Breeder {
     // root.result = "*" OR "Flt"
     //      "*" is default
     // ThreadPoolExecutor
-    public void breeeed (ArrayList<Tree> t) {	
+    public void breeeed (List<Tree> t) {	
 	int n2Select = Parameter.getI("tourney");
 	int popsize  = Parameter.getI("population");
 	float mutation = Parameter.getF("mutation");
 	float crossover= Parameter.getF("crossover");
 	float r;
+        int r1, r2;
 	ArrayList<Tree> generated = new ArrayList<Tree>(t.size());
         Tree current, crossNode;
 	
 	for (int i = 0; i < popsize; i++) {
 	    r = gen.nextFloat();
-            current = (Tree) t.get(gen.nextInt(t.size())).clone();
+            r1 = gen.nextInt(min(t.size(),n2Select));
+            current = (Tree) t.get(r1).clone();
+            
 	    if (r < crossover) {
-                crossNode = (Tree) t.get(gen.nextInt(t.size())).clone();
+                do {
+                r2 = gen.nextInt(min(t.size(),n2Select));
+                } while( r1 == r2);
+                crossNode = (Tree) t.get(r2).clone();
+                // l("Chosen crossover!", current, crossNode, r1, r2);
+                
                 crossover(current, crossNode);
+                
                 generated.add(current);
                 generated.add(crossNode);
+                // l("\tGot this:", current, crossNode);
+                
                 i++; // because we made two
 	    } else if (r >= 1-mutation) {
 		mutate(current);
@@ -50,7 +63,8 @@ public class Breeder {
 		System.err.println("SELECTION ERROR:: Your mutation/crossover don't add up to 1");
 	    }
 	}
-	gen.nextInt(n2Select);
+	t.clear();
+        t.addAll(generated);
     }   
     
     /**
@@ -63,7 +77,7 @@ public class Breeder {
         Tree current = null;
         
         // Some good ol' unboxing.
-        int fs = (int) (float) getF("functions");
+        int fs = (int) (float) getI("functions");
         ArrayList<String> grabBag = new ArrayList<String>();
         
         // Build a grab bag of all legal functions.
@@ -80,23 +94,11 @@ public class Breeder {
 	current = new Tree((GPfunction) get(func));
         
         // and recurse to take care of *its* parameters.
-        for (int i = 0; i < getI(func+".params.length"); i++) {
+        for (int i = 0; i < getI(func+".params.size"); i++) {
             current.addChildren(randomFunc(current.function.parameterType.get(i)));
         }
         return current;
     }
-    // function evegp.add (Flt, Flt) : Flt
-    // function evegp.lessThan (Flt, Flt) : Bool
-    // 
-    // functions = 2
-    // functions.0 = 'evegp.add'
-    // functions.1 = 'evegp.lessThan'
-    // functions.0.result = 'Flt'
-    // functions.0.params = ['Flt','Flt']
-    // functions.0.params.size = 2
-    // functions.1.result = 'Bool'
-    // functions.1.params = ['Flt','Flt']
-    // functions.1.params.size = 2
     
     /**
      * Attempts a crossover between the two trees given. Remember to clone BEFORE
@@ -177,5 +179,12 @@ public class Breeder {
             }
         } while(sum == 0);
         return node;
+    }
+    
+    
+    private void l(Object ... o) {
+        for (Object i : o)
+            System.out.print(i.toString() + ", ");
+        System.out.println();
     }
 }

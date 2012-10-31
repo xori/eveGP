@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  *
  * @author Evan Verworn (4582938) <ev09qz@brocku.ca>
  */
-public class Tree implements Comparable<Tree>{
+public class Tree implements Comparable<Tree>, Cloneable{
     public float score = Float.NaN;
     public GPfunction function;
     public ArrayList<Tree> children;
@@ -24,11 +24,12 @@ public class Tree implements Comparable<Tree>{
     
     public Tree (GPfunction func) {
 	function = func;
+        this.children = new ArrayList<Tree>();
     }
 
     //TODO This is where caching will need to happen.
     public float evaluate () {
-	return function.result((Tree[]) children.toArray());
+	return function.result(children.toArray(new Tree[0]));
     }
     
     public void addChildren(Tree node) {
@@ -53,14 +54,15 @@ public class Tree implements Comparable<Tree>{
 	}
 	t.score = this.score;
 	t.function = this.function;
-	for(Tree child : this.children) {
-	    t.addChildren((Tree) child.clone());
-	}
+        ArrayList<Tree> temp = new ArrayList<Tree>();
+        for (int i = 0; i < this.children.size(); i++)
+            temp.add((Tree) this.children.get(i).clone());
+	t.children = temp;
 	return t;
     }
     
     @Override
     public String toString () {
-        return this.function.toString((Tree[]) children.toArray());
+        return this.function.toString(children.toArray(new Tree[0]));
     }
 }

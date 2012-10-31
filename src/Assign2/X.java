@@ -19,4 +19,7 @@ public class X extends GPfunction{
 	return Parameter.getF("X");
     }
     
+    public String toString (Tree ... children){
+        return "X";
+    }
 }
