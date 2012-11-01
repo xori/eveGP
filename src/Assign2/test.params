@@ -1,14 +1,12 @@
 
 generations = 10
-population  = 10
+population  = 50
 
 seed	    = 1
-tourney     = 3
+tourney     = 7
 
 problem	    = Assign2.Regression
 
 function Assign2.Add (Float, Float) : Float
 function Assign2.Multiply (Float, Float) : Float
-function Assign2.X () : Float
-function Assign2.X () : Float
 function Assign2.X () : Float

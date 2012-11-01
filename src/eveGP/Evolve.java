@@ -50,7 +50,7 @@ public class Evolve {
             generations.add(breeder.createTree());
         }
         
-        spit(generations);
+        //spit(generations);
         
         // Begin training.
         System.out.println("Begin");

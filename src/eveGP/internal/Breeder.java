@@ -74,28 +74,44 @@ public class Breeder {
      * @return 
      */
     public Tree randomFunc (String result) {
+        return randomFunc(result,0);
+    }
+    
+    public Tree randomFunc (String result, int round) {
         Tree current = null;
         
         // Some good ol' unboxing.
         int fs = (int) (float) getI("functions");
         ArrayList<String> grabBag = new ArrayList<String>();
+        ArrayList<String> terminalBag = new ArrayList<String>();
         
         // Build a grab bag of all legal functions.
         for (int i = 0; i < fs; i++) {
             if (getS("functions."+i+".result").equals(result))
-                grabBag.add("functions."+i);
+                if (round > 5 && getI("functions."+i+".params.size")==0)
+                    terminalBag.add("functions."+i);
+                else
+                    grabBag.add("functions."+i);
             else if ("*".equals(result)) // Wildcard
-                grabBag.add("functions."+i);
+                if (round > 5 && getI("functions."+i+".params.size")==0)
+                    terminalBag.add("functions."+i);
+                else
+                    grabBag.add("functions."+i);
         }
         
         // Pick one function out of the grab bag and init();
         String func = grabBag.get(gen.nextInt(grabBag.size()));
        
+        if (round > 5 && terminalBag.size() > 0) {
+            func = terminalBag.get(gen.nextInt(terminalBag.size()));
+        }
+        
+        
 	current = new Tree((GPfunction) get(func));
         
         // and recurse to take care of *its* parameters.
         for (int i = 0; i < getI(func+".params.size"); i++) {
-            current.addChildren(randomFunc(current.function.parameterType.get(i)));
+            current.addChildren(randomFunc(current.function.parameterType.get(i), ++round));
         }
         return current;
     }
