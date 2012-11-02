@@ -3,12 +3,14 @@ package eveGP;
 import eveGP.internal.Tree;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Evan Verworn (4582938) <ev09qz@brocku.ca>
  */
-public abstract class GPfunction {
+public abstract class GPfunction implements Cloneable{
     public String result;
     public ArrayList<String> parameterType;
     // that must get set whenever a Problem wants to evaluate.
@@ -52,12 +54,13 @@ public abstract class GPfunction {
      */
     public String toString (Tree ... children){return "( NOT DEFINED )";};
   
+    @Override
      public Object clone() {
-         try { 
-             return super.clone();
-         } catch (CloneNotSupportedException e) { 
-             System.out.println("Failure");
-         } // never happens
-         return null;
+	try {
+	    return super.clone();
+	} catch (CloneNotSupportedException ex) {
+	    Logger.getLogger(GPfunction.class.getName()).log(Level.SEVERE, "GPfunction.clone", ex);
+	}
+	return null;
      }
 }
