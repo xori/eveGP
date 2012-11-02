@@ -5,6 +5,8 @@ import eveGP.GPfunction;
 import java.util.ArrayList;
 import static eveGP.internal.Parameter.*;
 import static java.lang.Math.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -68,7 +70,6 @@ public class Breeder {
     }   
     
     /**
-     * //TODO randomfunc() :: This will need to have some higher chance of rolling terminals.
      * //TODO randomfunc() is hacky.
      * @param result
      * @return 
@@ -79,6 +80,7 @@ public class Breeder {
     
     public Tree randomFunc (String result, int round) {
         Tree current = null;
+        GPfunction instance = null;
         
         // Some good ol' unboxing.
         int fs = (int) (float) getI("functions");
@@ -106,8 +108,8 @@ public class Breeder {
             func = terminalBag.get(gen.nextInt(terminalBag.size()));
         }
         
-        
-	current = new Tree((GPfunction) get(func));
+        instance = (GPfunction) ((GPfunction) get(func)).clone();
+	current = new Tree(instance);
         
         // and recurse to take care of *its* parameters.
         for (int i = 0; i < getI(func+".params.size"); i++) {

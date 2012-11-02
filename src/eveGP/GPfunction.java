@@ -9,7 +9,6 @@ import java.util.Arrays;
  * @author Evan Verworn (4582938) <ev09qz@brocku.ca>
  */
 public abstract class GPfunction {
-    private float value = Float.NaN;
     public String result;
     public ArrayList<String> parameterType;
     // that must get set whenever a Problem wants to evaluate.
@@ -27,14 +26,15 @@ public abstract class GPfunction {
     
     /**
      * Call this to evaluate a function. It takes care of caching!
+     * //TODO put this in Tree.
      * @return Result of custom function.
-     */
+     */ /*
     public float value () {
 	if (value != Float.NaN)
 	    return value;
 	value = result();
 	return value;
-    }
+    } */
     
     /**
      * Where your magic function happens. To evaluate the parameters, call the
@@ -52,4 +52,12 @@ public abstract class GPfunction {
      */
     public String toString (Tree ... children){return "( NOT DEFINED )";};
   
+     public Object clone() {
+         try { 
+             return super.clone();
+         } catch (CloneNotSupportedException e) { 
+             System.out.println("Failure");
+         } // never happens
+         return null;
+     }
 }

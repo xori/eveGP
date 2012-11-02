@@ -10,3 +10,4 @@ problem	    = Assign2.Regression
 function Assign2.Add (Float, Float) : Float
 function Assign2.Multiply (Float, Float) : Float
 function Assign2.X () : Float
+function Assign2.ERC () : Float

@@ -53,7 +53,7 @@ public class Tree implements Comparable<Tree>, Cloneable{
 	    Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	t.score = this.score;
-	t.function = this.function;
+	t.function = (GPfunction) this.function.clone();
         ArrayList<Tree> temp = new ArrayList<Tree>();
         for (int i = 0; i < this.children.size(); i++)
             temp.add((Tree) this.children.get(i).clone());
