@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static eveGP.internal.Parameter.*;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.util.logging.Logger;
 public abstract class GPfunction implements Cloneable{
     public String result;
     public ArrayList<String> parameterType;
+    public int ID;
     // that must get set whenever a Problem wants to evaluate.
     
     public GPfunction () {
@@ -26,17 +28,20 @@ public abstract class GPfunction implements Cloneable{
         //this.parameters = new ArrayList<GPfunction>(parameterType.size());
     }
     
+    public final Object getVariable       (String s) { return get("Problem."+ID+"."+s);}
+    public final int    getIntVariable    (String s) { return getI("Problem."+ID+"."+s);}
+    public final String getStringVariable (String s) { return getS("Problem."+ID+"."+s);}
+    public final float  getFloatVariable  (String s) { return getF("Problem."+ID+"."+s);}
+    
     /**
      * Call this to evaluate a function. It takes care of caching!
      * //TODO put this in Tree.
      * @return Result of custom function.
-     */ /*
-    public float value () {
-	if (value != Float.NaN)
-	    return value;
-	value = result();
-	return value;
-    } */
+     */
+    public float value (int ID, Tree ... children) {
+	this.ID = ID;
+        return result(children);
+    }
     
     /**
      * Where your magic function happens. To evaluate the parameters, call the

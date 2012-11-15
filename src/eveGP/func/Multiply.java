@@ -1,4 +1,4 @@
-package Assign2;
+package eveGP.func;
 
 import eveGP.internal.Tree;
 

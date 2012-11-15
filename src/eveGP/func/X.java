@@ -2,10 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Assign2;
+package eveGP.func;
 
 import eveGP.GPfunction;
-import eveGP.internal.Parameter;
 import eveGP.internal.Tree;
 
 /**
@@ -16,7 +15,7 @@ public class X extends GPfunction{
 
     @Override
     public float result(Tree... children) {
-	return Parameter.getF("X");
+	return getIntVariable("X");
     }
     
     public String toString (Tree ... children){

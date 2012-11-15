@@ -5,8 +5,6 @@ import eveGP.GPfunction;
 import java.util.ArrayList;
 import static eveGP.internal.Parameter.*;
 import static java.lang.Math.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -15,6 +13,7 @@ import java.util.logging.Logger;
 public class Breeder {
     
     private java.util.Random gen;
+    
     
     public Breeder () {
         gen = (java.util.Random) Parameter.get("rGenerator");
@@ -29,7 +28,7 @@ public class Breeder {
     // root.result = "*" OR "Flt"
     //      "*" is default
     // ThreadPoolExecutor
-    public void breeeed (List<Tree> t) {	
+    public void breeeed (List<Tree> t) {
 	int n2Select = Parameter.getI("tourney");
 	int popsize  = Parameter.getI("population");
 	float mutation = Parameter.getF("mutation");
@@ -45,9 +44,9 @@ public class Breeder {
             current = (Tree) t.get(r1).clone();
             
 	    if (r < crossover) {
-                do {
+                //do {
                 r2 = gen.nextInt(min(t.size(),n2Select));
-                } while( r1 == r2);
+                //} while( r1 == r2);
                 crossNode = (Tree) t.get(r2).clone();
                 // l("Chosen crossover!", current, crossNode, r1, r2);
                 
@@ -66,6 +65,9 @@ public class Breeder {
 	    }
 	}
 	t.clear();
+        if (generated.size() > popsize)
+            while(generated.size() > popsize)
+                generated.remove(0);
         t.addAll(generated);
     }   
     
@@ -89,16 +91,15 @@ public class Breeder {
         
         // Build a grab bag of all legal functions.
         for (int i = 0; i < fs; i++) {
-            if (getS("functions."+i+".result").equals(result))
+            if (getS("functions."+i+".result").equals(result)) {
                 if (round > 5 && getI("functions."+i+".params.size")==0)
                     terminalBag.add("functions."+i);
-                else
-                    grabBag.add("functions."+i);
-            else if ("*".equals(result)) // Wildcard
+                grabBag.add("functions."+i);
+            } else if ("*".equals(result)) { // Wildcard
                 if (round > 5 && getI("functions."+i+".params.size")==0)
                     terminalBag.add("functions."+i);
-                else
-                    grabBag.add("functions."+i);
+                grabBag.add("functions."+i);
+            }
         }
         
         // Pick one function out of the grab bag and init();

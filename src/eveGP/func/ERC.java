@@ -1,9 +1,8 @@
-package Assign2;
+package eveGP.func;
 
 import eveGP.internal.Tree;
 import static eveGP.internal.Parameter.get;
 import java.util.Random;
-
 
 /**
  *
@@ -16,8 +15,7 @@ public class ERC extends eveGP.GPfunction {
     public void init () {
         Random g = (Random) get("rGenerator");
         // rGenerator is the system random generator.
-        this.variable = (g.nextInt(10) - 5) + g.nextFloat();
-        // sets this node to a floating value between -5.0 and 5.0
+        this.variable = (g.nextInt(2) - 1) + g.nextFloat();
     }
     
     @Override

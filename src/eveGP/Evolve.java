@@ -2,12 +2,15 @@ package eveGP;
 
 import eveGP.internal.Breeder;
 import eveGP.internal.Parameter;
+import eveGP.internal.ThreadManager;
 import static eveGP.internal.Parameter.*;
 import eveGP.internal.Tree;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,12 +22,15 @@ public class Evolve {
     
     public static ArrayList<Tree> generations;
     public static Breeder breeder;
+    public static Tree best;
     
-    public Evolve () {
+    public Evolve (String [] params) {
         loadDefaults();
 	loadFile(getS("param.file"));
-	initalize();
-	System.out.println(Parameter.dumpStats());
+        loadArguments(params);
+        initalize();
+	System.err.println(Parameter.dumpStats());
+        
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
@@ -33,17 +39,24 @@ public class Evolve {
         
         
         generations = new ArrayList<Tree>();
+        best = new Tree(null);
+        best.score = Float.POSITIVE_INFINITY;
         breeder = new Breeder();
         
         int popsize = getI("population");
         int gensize = getI("generations");
-        Tree current;
+        int threads = getI("threads");
+        long current;
 	GPproblem problem = null;
+        ThreadManager manager;
+        
 	try {
-	    problem = (GPproblem) ((Class) get("problem.class")).newInstance();
+            problem = (GPproblem) ((Class) get("problem.class")).newInstance();
+            problem.setInfo(0);
 	} catch (Exception ex) {
 	    System.exit(2);
 	}
+        problem.setup();
 	
         // Create initial generation
         for (int i = 0; i < popsize; i++) {
@@ -51,31 +64,46 @@ public class Evolve {
         }
         
         //spit(generations);
-        
+                
         // Begin training.
-        System.out.println("Begin");
+        System.err.println("Begin");
         for (int i = 0; i < gensize; i++) {
             set("generation", i);
-            System.out.println("Generation: " + i );
+            System.err.println("Generation: " + i );
             
-            for (int j = 0; j < popsize; j++) {
-                current = generations.get(j);
-                current.score = problem.evaluate(current);
+            current = System.currentTimeMillis();
+            manager = new ThreadManager(threads, problem.getClass());
+            manager.execute(generations.toArray(new Tree[0]));
+            try {
+                manager.executor.shutdown();
+                manager.executor.awaitTermination(1, TimeUnit.HOURS);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Evolve.class.getName()).log(Level.SEVERE, null, ex);
             }
-	    // Sort. 0 is best. eg) 0, 1, -2, 3, 3...
+            
+            // Sort. 0 is best. eg) 0, 1, -2, 3, 3...
 	    Collections.sort(generations);
+            if (best.score > generations.get(0).score)
+                best = (Tree) generations.get(0).clone();
+                       
+            if ( getI("elitism") == 1 )
+                generations.add(best);
             problem.stats(i, generations.toArray(new Tree[0]));
+            problem.cleanUpMemory();
             
             if (generations.get(0).score == 0) {
-                System.out.println("Optimal found");
+                System.err.println("Optimal found");
                 break;
             }
 
             if (i != gensize-1) // Don't breed on last run.
                 // Will look to 'selector.tourney' to decide who to breed.
                 breeder.breeeed(generations);
+            //System.gc();
         }
-        System.out.println("Finished");	
+        System.err.println("Finished");	
+        problem.best(best);
+        System.exit(0);
     }
     
     private void spit (Collection<Tree> l) {
@@ -98,6 +126,8 @@ public class Evolve {
 	set("threads"	 , 1);
 	set("problem"	 , "");
         set("root.result", "*");
+        set("elitism"    , 0);
+        set("stats"      , "stats");
     }   
     public static void initalize () {
 	Random g = (Random) get("rGenerator");
@@ -108,12 +138,15 @@ public class Evolve {
 	}
 	String c = getS("problem");
 	loadClass(c,eveGP.GPproblem.class, "problem.class", false);
+        try {
+            new File(getS("stats")).delete();
+        } catch (Exception ignore) { }
     }
     
     public static void main (String args[]) {
+        //set("param.file", "src/A2/test.params");
 	if (args.length > 0)
 	    set("param.file", args[0]);
-        set("param.file", "src/Assign2/test.params");        
-	new Evolve();
+	new Evolve(args);
     }
 }

@@ -16,6 +16,15 @@ public class Tree implements Comparable<Tree>, Cloneable{
     public ArrayList<Tree> children;
     public int thread = -1;
     public int depth = 0;
+    public int ID;
+    
+    public void setID (int id) {
+        ID = id;
+        if (children.isEmpty())
+            return;
+        for(Tree t : children)
+            t.setID(id);
+    }
     
     public Tree (GPfunction func, Tree ... children) {
        function = func;
@@ -29,7 +38,7 @@ public class Tree implements Comparable<Tree>, Cloneable{
 
     //TODO This is where caching will need to happen.
     public float evaluate () {
-	return function.result(children.toArray(new Tree[0]));
+        return function.value(ID, children.toArray(new Tree[0]));
     }
     
     public void addChildren(Tree node) {

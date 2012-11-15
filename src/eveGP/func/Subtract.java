@@ -1,4 +1,4 @@
-package Assign2;
+package eveGP.func;
 
 import eveGP.internal.Tree;
 
@@ -6,24 +6,20 @@ import eveGP.internal.Tree;
  *
  * @author Evan Verworn (4582938) <ev09qz@brocku.ca>
  */
-public class Add extends eveGP.GPfunction{
+public class Subtract extends eveGP.GPfunction{
 
     /**
-     * Adds all children and returns the result.
+     * Subtracts children and returns the result.
      * @param children
      * @return 
      */
     @Override
     public float result(Tree... children) {
-	float sum = 0;
-        for (Tree c : children) {
-	    sum += c.evaluate();
-	}
-	return sum;
+	return children[0].evaluate() - children[1].evaluate();
     }
     
     public String toString (Tree ... children){
-        String o = "( PLUS ";
+        String o = "( SUB ";
         for (Tree t : children)
             o += t.toString()+ " ";
         o+= ")";
