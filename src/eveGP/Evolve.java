@@ -118,7 +118,7 @@ public class Evolve {
 	set("functions"	 , 0);
 	set("mutation"	 , 0.1f);
 	set("crossover"  , 0.9f);
-	set("tourney"	 , 7);
+	set("tourney"	 , 3);
 	Random generator = new Random();
 	int seed = generator.nextInt(1000000);
 	set("seed"	 , seed);

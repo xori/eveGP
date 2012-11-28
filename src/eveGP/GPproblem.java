@@ -33,7 +33,7 @@ public abstract class GPproblem implements Runnable{
         String S = "Problem."+ID+"."+s;
         vars.add(S);
         set(S, o);
-        //System.out.println("SET 'Problem."+ID+"."+s+"'");
+        //System.out.println("SET 'Problem."+ID+"."+s+"' = "+o.toString());
     }
     public final void setVariable(Tree t, String s, Object o) {
         String S = "Problem."+t.ID+"."+s;
@@ -47,10 +47,10 @@ public abstract class GPproblem implements Runnable{
         vars.clear();
     }
     
-    public final Object getVariable       (String s) { return get("Problem."+thread+"."+s);}
-    public final int    getIntVariable    (String s) { return getI("Problem."+thread+"."+s);}
-    public final String getStringVariable (String s) { return getS("Problem."+thread+"."+s);}
-    public final float  getFloatVariable  (String s) { return getF("Problem."+thread+"."+s);}
+    public final Object getVariable       (String s) { return get ("Problem."+ID+"."+s);}
+    public final int    getIntVariable    (String s) { return getI("Problem."+ID+"."+s);}
+    public final String getStringVariable (String s) { return getS("Problem."+ID+"."+s);}
+    public final float  getFloatVariable  (String s) { return getF("Problem."+ID+"."+s);}
     
     /**
      * Run once before the first generation.
@@ -66,10 +66,7 @@ public abstract class GPproblem implements Runnable{
     public final void run () {
         myTree.setID(ID);
         myTree.score = evaluate(myTree);
-        for (String s : vars) {
-            remove("Problem." + thread + "." + s);
-        }
-        vars.clear();
+        cleanUpMemory();
     }
     
     
