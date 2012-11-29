@@ -5,11 +5,14 @@ import eveGP.internal.Parameter;
 import eveGP.internal.ThreadManager;
 import static eveGP.internal.Parameter.*;
 import eveGP.internal.Tree;
+import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,10 +79,14 @@ public class Evolve {
             manager.execute(generations.toArray(new Tree[0]));
             try {
                 manager.executor.shutdown();
-                manager.executor.awaitTermination(1, TimeUnit.HOURS);
+                manager.executor.allowCoreThreadTimeOut(true);
+                manager.executor.setKeepAliveTime(5, TimeUnit.SECONDS);
+                manager.executor.awaitTermination(5, TimeUnit.HOURS);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Evolve.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            beginFitnessShare(generations);
             
             // Sort. 0 is best. eg) 0, 1, -2, 3, 3...
 	    Collections.sort(generations);
@@ -104,6 +111,18 @@ public class Evolve {
         System.err.println("Finished");	
         problem.best(best);
         System.exit(0);
+    }
+    
+    private void beginFitnessShare (ArrayList<Tree> g) {
+	ConcurrentHashMap<Point, ConcurrentLinkedQueue<Tree>> scoring;
+	scoring = (ConcurrentHashMap<Point, ConcurrentLinkedQueue<Tree>>) Parameter.get("shared.table");
+	for(ConcurrentLinkedQueue<Tree> Q : scoring.values()) {
+	    for(Tree T : Q) {
+		T.score += 0.5 * Q.size();
+	    }
+	    Q.clear();
+	}
+	scoring.clear();
     }
     
     private void spit (Collection<Tree> l) {

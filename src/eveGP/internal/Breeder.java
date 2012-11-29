@@ -105,7 +105,7 @@ public class Breeder {
         // Pick one function out of the grab bag and init();
         String func = grabBag.get(gen.nextInt(grabBag.size()));
        
-        if (round > 5 && terminalBag.size() > 0) {
+        if (round > 8 && terminalBag.size() > 0) {
             func = terminalBag.get(gen.nextInt(terminalBag.size()));
         }
         

@@ -105,6 +105,8 @@ public abstract class GPproblem implements Runnable{
         
         try {
             FileWriter fw = new FileWriter(getS("stats")+".txt", true);
+            if (generation == 0)
+                fw.write("Generation,Best,Average,Standard Dev,Function");
             fw.write(generation + "," + Evolve.best.score + "," + average + "," + std + "," + Evolve.best.toString()+"\n");
             fw.close();
         } catch (IOException ex) {
