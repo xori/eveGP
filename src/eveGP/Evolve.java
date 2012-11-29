@@ -118,7 +118,7 @@ public class Evolve {
 	scoring = (ConcurrentHashMap<Point, ConcurrentLinkedQueue<Tree>>) Parameter.get("shared.table");
 	for(ConcurrentLinkedQueue<Tree> Q : scoring.values()) {
 	    for(Tree T : Q) {
-		T.score += 0.5 * Q.size();
+		T.score += 0.2 * Q.size();
 	    }
 	    Q.clear();
 	}
