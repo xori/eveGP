@@ -5,7 +5,7 @@ population  = 50
 mutation    = 0.1
 crossover   = 0.9
 
-seed	    = 1
+seed	    = 2
 tourney     = 5
 threads     = 6
 
@@ -14,4 +14,4 @@ problem	    = example.Regression
 function eveGP.func.Add      (Float, Float) : Float
 function eveGP.func.Multiply (Float, Float) : Float
 function eveGP.func.X        ()             : Float
-function eveGP.func.ERC      ()             : Float
+# function eveGP.func.ERC    ()             : Float

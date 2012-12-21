@@ -1,0 +1,686 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+body{
+    margin: 0 auto;
+    font-family: Georgia, Palatino, serif;
+    color: #444444;
+    line-height: 1;
+    max-width: 960px;
+    padding: 5px;
+}
+h1, h2, h3, h4 {
+    color: #111111;
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, p {
+    margin-bottom: 16px;
+    padding: 0;
+}
+h1 {
+    font-size: 28px;
+}
+h2 {
+    font-size: 22px;
+    margin: 20px 0 6px;
+}
+h3 {
+    font-size: 21px;
+}
+h4 {
+    font-size: 18px;
+}
+h5 {
+    font-size: 16px;
+    margin-bottom: 0;
+    font-weight: bold;
+}
+h5 + p {
+	margin-top:0;
+}
+a {
+    color: #0099ff;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+a:hover {
+    text-decoration: none;
+    color: #ff6600;
+}
+a:visited {
+    color: #0099ff;
+}
+ul, ol {
+    padding: 0;
+    margin: 0;
+}
+li {
+    line-height: 24px;
+    margin-left: 44px;
+}
+li ul, li ul {
+    margin-left: 24px;
+}
+p, ul, ol {
+    font-size: 14px;
+    line-height: 20px;
+    max-width: 540px;
+}
+pre {
+    padding: 0px 24px;
+    max-width: 800px;
+    white-space: pre-wrap;
+}
+code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    line-height: 1.5;
+    font-size: 13px;
+}
+h5 code {
+	font-size: inherit;
+}
+aside {
+    display: block;
+    float: right;
+    width: 390px;
+}
+blockquote {
+    border-left:.5em solid #eee;
+    padding: 0 2em;
+    margin-left:0;
+    max-width: 476px;
+}
+blockquote  cite {
+    font-size:14px;
+    line-height:20px;
+    color:#bfbfbf;
+}
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+blockquote p {  
+    color: #666;
+    max-width: 460px;
+}
+hr {
+    width: 540px;
+    text-align: left;
+    margin: 0 auto 0 0;
+    color: #999;
+}
+
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  *vertical-align: middle;
+}
+button, input {
+  line-height: normal;
+  *overflow: visible;
+}
+button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+}
+/* override default chrome & firefox settings */
+input:not([type="image"]), textarea {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+input[type="search"] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+label,
+input,
+select,
+textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: normal;
+  margin-bottom: 18px;
+}
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+  margin-bottom: 0;
+}
+input[type=text],
+input[type=password],
+textarea,
+select {
+  display: inline-block;
+  width: 210px;
+  padding: 4px;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+  height: 18px;
+  color: #808080;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+select, input[type=file] {
+  height: 27px;
+  line-height: 27px;
+}
+textarea {
+  height: auto;
+}
+
+/* grey out placeholders */
+:-moz-placeholder {
+  color: #bfbfbf;
+}
+::-webkit-input-placeholder {
+  color: #bfbfbf;
+}
+
+input[type=text],
+input[type=password],
+select,
+textarea {
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+input[type=text]:focus, input[type=password]:focus, textarea:focus {
+  outline: none;
+  border-color: rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
+/* buttons */
+button {
+  display: inline-block;
+  padding: 4px 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #0064cd;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd));
+  background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd));
+  background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -o-linear-gradient(top, #049cdb, #0064cd);
+  background-image: linear-gradient(top, #049cdb, #0064cd);
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  border: 1px solid #004b9a;
+  border-bottom-color: #003f81;
+  -webkit-transition: 0.1s linear all;
+  -moz-transition: 0.1s linear all;
+  transition: 0.1s linear all;
+  border-color: #0064cd #0064cd #003f81;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+button:hover {
+  color: #fff;
+  background-position: 0 -15px;
+  text-decoration: none;
+}
+button:active {
+  -webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+/* CSS stylesheet is based on Kevin Burke's Markdown.css project (http://kevinburke.bitbucket.org/markdowncss) */
+</style>
+</head>
+<body>
+<h1>eveGP</h1>
+
+<p>The evolutionary library <em>with grammar</em> created for 4V82 and now used for everything. It has been created by Evan Verworn (4582938) <code>&lt;ev09qz@brocku.ca&gt;</code> for the purpose of creating experiments quickly.</p>
+
+<h2>How to install</h2>
+
+<p>Located in the <code>dist</code> folder will be a file called <code>eveGP.jar</code>. This is the entire library that must be included in your java CLASSPATH for your import statements to work.</p>
+
+<p>That's it.</p>
+
+<h2>How to use</h2>
+
+<p>This is more of a longer topic but can be broken into smaller ones.</p>
+
+<ul>
+<li><a href="#structure">Structure</a></li>
+<li><a href="#parameters">Parameters</a></li>
+<li><a href="#problem">Problem/Function Creation</a></li>
+<li><a href="#execution">Executing</a></li>
+</ul>
+
+<p>Explicit <a href="#examples">examples</a> will be given at the end of this document. You can totally just learn from those.</p>
+
+<p><a id="structure"></a></p>
+
+<h3>Structure</h3>
+
+<p>The structure of a genetic programming problem is pretty simple, there are 3 primary things that will need to be in every project.</p>
+
+<p><a id="problem"></a></p>
+
+<h4>your <strong>Problem</strong></h4>
+
+<p>Your definition of your fitness function and possibily your testing functions if you have any. <em>(For testing data not trained on)</em> This is a java class extending the <code>eveGP.GPproblem</code>, to learn more about what this entails you can scroll down to where we cover the <a href="#GPproblem">expected overriden functions</a>. Note that this will have to be in a package that you define and that this package must also be in your java CLASSPATH as eveGP will try to dynamically load it.</p>
+
+<h4>your <strong>Functions</strong></h4>
+
+<p>Very minimal java classes extending the <a href="#GPfunction">GPfunction</a> class with most likely a single function in them. These can range from as simple as addition to as complex as forier transforms. <em>(There are also built in functions for the simple cases. Add, Subtract, Multiply, etc. These are in the package <code>eveGP.func.*</code>)</em> Your GP functions must also be in a package referenced in your java CLASSPATH.</p>
+
+<p><a id="parameters"></a></p>
+
+<h4>your <strong>Parameters</strong></h4>
+
+<p>This is a text file named whatever you want, the standard to is end it with a '<code>.param</code>'. These parameters are where you can set global parameters, some of them will be required. You can also make up your custom parameters here then get them in your defined problems/functions with the <code>Parameter.get("&lt;name&gt;")</code> function.</p>
+
+<p>The parameters follow a syntax style of,</p>
+
+<pre><code>NAME = VALUE
+</code></pre>
+
+<p>where the <code>'='</code> is optional, and can also be replaced with either whitespace or the <code>':'</code> symbol. Or both <code>':='</code></p>
+
+<p>You must also declare your functions and how the GP can perform crossover/mutation with them. Your functions can be declared in your parameter file with the following syntax.</p>
+
+<pre><code>function MY.PACKAGE.CLASS ({TYPE}) : TYPE
+</code></pre>
+
+<p>where that is the manditory string 'function' followed by the java class URI of the defined function (this being in your java CLASSPATH). Followed by a list of virtual types that your function recieves, followed lastly by a return virtual type. For example.</p>
+
+<pre><code>function net.verworn.GreaterThan (INT,INT) : BOOL
+</code></pre>
+
+<p>It should be noted that <code>'INT'</code> and <code>'BOOL'</code> do not map to actual java classes but are instead more a way of differentiating generic types. So when the crossover function is being applied it <strong>does not</strong> do this,</p>
+
+<pre><code>GreaterThan(GreaterThan(5,2),3)
+</code></pre>
+
+<p>Which is of course incorrect because how can you compare a boolean to an integer in terms of which is greater.</p>
+
+<p>If however you <strong>do</strong> want your function to <em>also</em> accept <code>BOOL</code>s and <code>INT</code>s you can declare it twice,</p>
+
+<pre><code>function net.verworn.GreaterThan (INT,INT) : BOOL
+function net.verworn.GreaterThan (BOOL,BOOL) : BOOL
+</code></pre>
+
+<p>then decide how it should handle these cases within the class <code>net.verworn.GreaterThan</code>. This declaration would accept <strong>either</strong> <code>BOOL</code>s OR <code>INT</code>s but not a mix of either. To make a function accept all virtual types you can denote it with a <code>'*'</code>.</p>
+
+<h3>System Parameters</h3>
+
+<p>The following parameters are optional (with the exception of "<code>problem</code>") their default values will be listed below.</p>
+
+<pre><code>generations = 50
+population  = 100
+seed        = &lt;random generated integer number at startup&gt;
+mutation    = 0.1
+crossover   = 0.9
+elitism     = 0
+</code></pre>
+
+<p>These are fairly standard parameters, just know that <code>mutation</code> and <code>crossover</code> should equal 1.0, <code>elitism</code> takes either a <code>0</code> or <code>1</code> and that there exists a global parameter called <code>generation</code> which defines the <strong>current</strong> generation when evaluating.</p>
+
+<pre><code>tourney     = 3
+</code></pre>
+
+<p>Represents how big the tournement size will be when selecting the top individuals.</p>
+
+<pre><code>threads     = 1
+</code></pre>
+
+<p>This is a multi-threaded enabled library so you can have as many threads as you wish.</p>
+
+<pre><code>problem     = my.package.Class
+</code></pre>
+
+<p>This is the only <strong>manditory</strong> parameter <strong>not set</strong> for you. This must be the java URI for your defined <a href="#problem">problem</a> that is in your java CLASSPATH</p>
+
+<pre><code>root.result = *
+</code></pre>
+
+<p>Because this library supports grammars you can define what you want your final virtual type to be. In the default case it is set to the wildcard, but you can make it whatever you wish.</p>
+
+<pre><code>stats       = "stats"
+</code></pre>
+
+<p>This is filename of the default stats file relative to the start location of the experiment. When you override the default <code>stat()</code> function in <a href="#GPproblem">GPproblem</a> this is no longer used (unless you call <code>super.stat()</code>). </p>
+
+<p>That's it. Remember you can define your own custom global variables by using the <a href="#parameters">previously defined syntax</a>.</p>
+
+<h3>Accessing Parameters in Java</h3>
+
+<p>The above was more of the syntax of <strong>defining</strong> global parameters, this section will be how to <strong>use</strong> them, and it all starts with</p>
+
+<pre><code>import eveGP.internal.Parameter;
+</code></pre>
+
+<p>This class then has a few static functions which we will go into detail. Just know that these are for GLOBAL parameters and not <a href="#localParameters">local (input) parameters</a>.</p>
+
+<p><a id="Parameter.set"></a></p>
+
+<h5><code>void Parameter.set(String key, Object value)</code></h5>
+
+<p>This sets a global parameter with the index of <code>key</code> to the value of <code>value</code>. Note that it doesn't care about the type of the value and that this operation <strong>is</strong> multi-thread safe.</p>
+
+<p><a id="Parameter.get"></a></p>
+
+<h5><code>Object Parameter.get(String key)</code></h5>
+
+<p>This returns an uncasted object reference. This object is dependant on the <code>key</code> you send in, that is set with the <a href="#Parameter.set"><code>set</code></a> function.</p>
+
+<h5><code>float Parameter.getF(String key)</code></h5>
+
+<p>This returns an unboxed Float primitive. This works in the same way as the <a href="#Parameter.get"><code>get</code></a> function but will attempt to cast it to a <em>'float'</em>. If it fails, it will print to the <code>stderr</code> and return a <code>null</code> object.</p>
+
+<h5><code>int Parameter.getI(String key)</code></h5>
+
+<p>This returns an unboxed Integer primitive. This works in the same way as the <a href="#Parameter.get"><code>get</code></a> function but will attempt to cast it to a <em>'int'</em>. If it fails, it will print to the <code>stderr</code> and return a <code>null</code> object.</p>
+
+<h5><code>String Parameter.getS(String key)</code></h5>
+
+<p>This returns a String object. This works in the same way as the <a href="#Parameter.get"><code>get</code></a> function but will attempt to cast it to a <em>'String'</em>. If it fails, it will print to the <code>stderr</code> and return a <code>null</code> object.</p>
+
+<h5><code>boolean Parameter.exists(String key)</code></h5>
+
+<p>Returns true only if there exists a link for an index named <code>key</code>.</p>
+
+<h3>Local Variables</h3>
+
+<p>When this GP library creates your parse trees you will need to set variables relivent for a particular individual. For example, in the case of</p>
+
+<pre><code>+ ( X, Y)
+</code></pre>
+
+<p>What is <code>X</code> and <code>Y</code>? You will most likely be testing this data on many rows of data and <code>X</code> and <code>Y</code> will be changing with each row. You can't hardcode it. In these cases you can set these variables within the current tree by the following statement.</p>
+
+<pre><code>setVariable("X", i);
+setVariable("Y", j);
+</code></pre>
+
+<p>Where <code>i</code> and <code>j</code> are some object (possibly 5 or 10 or "cookie"). These variables can then be retrieved by your later defined terminal functions with the statement.</p>
+
+<pre><code>int x = (int) getVariable("X");
+</code></pre>
+
+<p>Casting these variables can get very annoying fast so a few helper functions were created to do just that.</p>
+
+<pre><code>getIntVariable("X");
+getStringVariable("X");
+getFloatVariable("X");
+</code></pre>
+
+<p>All of these will attempt to cast the stored variable to the desired type, if it fails it will yell an error message and return null.</p>
+
+<p><a id="problem"></a><a id="GPproblem"></a></p>
+
+<h3>Creating Problems (GPproblem)</h3>
+
+<p>A problem in eveGP is a java class in a package defined in your java CLASSPATH that extends the <code>eveGP.GPproblem</code> class. This class has a few functions that can be overriden.</p>
+
+<h5><code>abstract float evaluate ( Tree tree )</code></h5>
+
+<p>This function is the only <strong>required</strong> function to be overriden. The purpose of this function is to return the evaluated fitness result, or the 'score' for the individual (<em><code>tree</code></em>). The individuals result can be retreived by running <code>tree.evaluate()</code>. The standard is to return a zero if that individual is a optimal solution.</p>
+
+<h5><code>void stats (int generation, Tree ... trees)</code></h5>
+
+<p>This function is an optional one that is run at the end of each generation. This is where you would process the generations results and maybe run your testing data if you had any. The array <code>trees</code> have been scored and their scores can be accessed via the field <code>trees[i].score</code>.</p>
+
+<p>It should also be noted that if you want the default stats creation you should run <code>super.stats(generation, trees)</code> to output to the <code>stats.txt</code> file.</p>
+
+<h5><code>void best (Tree t)</code></h5>
+
+<p>There is also one more function, this function is run <em>once</em> at the end of the experiment. It is passed the individual with the best score for you to run the individual on maybe more data, data that you wouldn't want to run on all of the individuals. This can sometimes give you a better representation of <em>how good</em> your generated solution is.</p>
+
+<p><a id="GPfunction"></a></p>
+
+<h3>Creating Functions (GPfunction)</h3>
+
+<p>Functions can be like 'add' or 'subtract' or 'sine'. They can also be like 'move left', 'turn right' or 'attack'. It's really up to your creativity but the basis is that it must take <strong>in</strong> parameters and <strong>return</strong> a result.</p>
+
+<p>The process of making a function starts by extending the <code>eveGP.GPfunction</code> class. This class has really only 2 functions that must be overriden.</p>
+
+<h5><code>abstract float result (Tree ... children)</code></h5>
+
+<p>This function takes in an array of other functions. The result of one of these trees can be retrieved using <code>children[i].evaluate()</code>. This function can be very simple, below is an example of a multiply function.</p>
+
+<pre><code>@Override
+public float result(Tree ... children) {
+    return children[0].evaluate() * children[1].evaluate();
+}
+</code></pre>
+
+<p>Crazy I know. Here is another example, of a <code>X</code> terminal function getting the local variable.</p>
+
+<pre><code>@Override
+public float result(Tree ... children) {
+    return getFloatVariable("X");
+}
+</code></pre>
+
+<p>They can of course be more complicated but there isn't a rule saying that they have to be.</p>
+
+<h5><code>String toString(Tree ... children)</code></h5>
+
+<p>When eveGP tries to output this tree it needs to know how to serialize this current fuction. Best just to see what I mean by example.</p>
+
+<pre><code>public String toString (Tree ... children){
+    return "(PLUS "+children[0].toString()+" "+children[1].toString()+")";
+}
+</code></pre>
+
+<p>This is an example of a <code>toString</code> method for an addition <code>GPfunction</code>. Calling <code>toString()</code> on a tree will trigger it to recurse to serialize its' children.</p>
+
+<p>While this function is not <em>manditory</em> it is obviously highly recommended. After all if you don't put this in, you won't be able to do analysis on your generated function because you won't know what it is.</p>
+
+<pre><code>(NOT DEFINED (NOT DEFINED (NOT DEFINED NOT DEFINED NOT DEFINED)))
+</code></pre>
+
+<p>What an amazing function that it.</p>
+
+<p><a id="execution"></a></p>
+
+<h3>Running Your Experiment</h3>
+
+<p>So now you have,</p>
+
+<ol>
+<li>A <a href="#GPproblem">Problem</a></li>
+<li>A list of <a href="#GPfunction">functions</a></li>
+<li>A <a href="#parameters">Parameter</a> file (with your functions declared in them)</li>
+</ol>
+
+<p>You can then run your experiment with,</p>
+
+<pre><code>java -jar eveGP.jar /some/dir/yourParameters.params
+    or
+java eveGP.Evolve /some/dir/yourParameters.params
+</code></pre>
+
+<p>You can also set parameters on the command line. So for example if you were running your experiement 50 times you could (in a linux environment)</p>
+
+<pre><code>#!/bin/bash
+for i in {0..50}
+do
+    java -jar eveGP.jar myParams.params seed=$i
+done
+</code></pre>
+
+<p>You can append as many parameters as you want onto the end of the line, but make sure that there are <strong>NO</strong> whitespace between the name and the value.</p>
+
+<pre><code>seed = 5 // INCORRECT
+seed=5   // CORRECT!
+</code></pre>
+
+<p><a id="examples"></a></p>
+
+<h2>Learn by Example</h2>
+
+<h4>An example parameter file.</h4>
+
+<pre><code>generations = 10
+population  = 50
+
+mutation    = 0.1
+crossover   = 0.9
+
+seed        = 2
+tourney     = 5
+threads     = 6
+
+problem     = example.Regression
+
+function eveGP.func.Add      (Float, Float) : Float
+function eveGP.func.Multiply (Float, Float) : Float
+function eveGP.func.X        ()             : Float
+function eveGP.func.ERC      ()             : Float
+</code></pre>
+
+<p><em>Note the function <code>eveGP.func.ERC</code> this is a ephemeral random constant function that has been made for you. I would suggest tring to modify this to your needs rather than creating something yourself.</em></p>
+
+<h4>An example simple regression GPproblem</h4>
+
+<pre><code>package example;
+
+import eveGP.internal.Tree;
+import static java.lang.Math.*;
+
+public class Regression extends eveGP.GPproblem {
+
+    private float myFunction (int X) {
+        return (float) (pow(X,3) + pow(X,2) + X);
+    }
+
+    @Override
+    public float evaluate(Tree tree) {
+        float sum = 0;
+        for (int x = 0; x &lt; 100; x++) {
+            setVariable("X", x);
+            sum += abs(tree.evaluate() - myFunction(x));
+        }
+        return sum;
+    }
+}
+</code></pre>
+
+<h4>An example of an ephemeral random constant GPfunction</h4>
+
+<p>This is one of the more complicated GPfunctions that you could implement. I would just recommend coping this if you want to implement a ERC.</p>
+
+<pre><code>package eveGP.func;
+
+import eveGP.internal.Tree;
+import static eveGP.internal.Parameter.get;
+import java.util.Random;
+
+public class ERC extends eveGP.GPfunction {
+
+    private float variable = Float.NaN;
+
+    public void init () {
+        Random g = (Random) get("rGenerator");
+        // rGenerator is the system random generator.
+        this.variable = (g.nextInt(2) - 1) + g.nextFloat();
+    }
+
+    @Override
+    public float result(Tree ... children) {
+        if (Float.isNaN(variable)) {
+            init();
+        }
+        return this.variable;
+    }
+
+    @Override
+    public Object clone() {
+        ERC node = null;
+        try {
+            node = (ERC) super.clone();
+            if (Float.isNaN(variable));
+                // Don't init on ourselves because there is one object at the
+                // begining that we clone into every other ERC. 
+                node.init();
+        } catch (Exception e) { 
+            System.err.println("Failure.");
+        }
+        return node;
+    }
+
+    @Override
+    public String toString (Tree ... t) {
+        return String.valueOf(variable);
+    }
+
+}
+</code></pre>
+
+<h4>A move conventional example of a GPfunction</h4>
+
+<p>This example is a GreaterThan function.</p>
+
+<pre><code>package eveGP.func;
+
+import eveGP.internal.Tree;
+
+public class GreaterThan extends eveGP.GPfunction {
+
+    @Override
+    public float result(Tree... children) {
+        float d = children[0].evaluate() - children[1].evaluate();
+        return (d &gt; 0) ? 1 : 0;
+    }
+
+    public String toString (Tree ... children) {
+        return "( &gt; "+ children[0].toString() +
+                " " + children[1].toString() + " )";
+    }
+}
+</code></pre>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

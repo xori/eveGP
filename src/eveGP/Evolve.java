@@ -86,8 +86,6 @@ public class Evolve {
                 Logger.getLogger(Evolve.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            beginFitnessShare(generations);
-            
             // Sort. 0 is best. eg) 0, 1, -2, 3, 3...
 	    Collections.sort(generations);
             if (best.score > generations.get(0).score)
@@ -111,18 +109,6 @@ public class Evolve {
         System.err.println("Finished");	
         problem.best(best);
         System.exit(0);
-    }
-    
-    private void beginFitnessShare (ArrayList<Tree> g) {
-	ConcurrentHashMap<Point, ConcurrentLinkedQueue<Tree>> scoring;
-	scoring = (ConcurrentHashMap<Point, ConcurrentLinkedQueue<Tree>>) Parameter.get("shared.table");
-	for(ConcurrentLinkedQueue<Tree> Q : scoring.values()) {
-	    for(Tree T : Q) {
-		T.score += 0.2 * Q.size();
-	    }
-	    Q.clear();
-	}
-	scoring.clear();
     }
     
     private void spit (Collection<Tree> l) {

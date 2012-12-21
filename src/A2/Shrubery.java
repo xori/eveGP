@@ -24,7 +24,6 @@ import javax.imageio.ImageIO;
 public class Shrubery extends eveGP.GPproblem {
     
     private int tP, tN, fP, fN;
-    private float bS = 9999999;
 
     @Override
     public float evaluate(Tree tree) {
@@ -39,20 +38,12 @@ public class Shrubery extends eveGP.GPproblem {
         
         ConcurrentHashMap<Point, ConcurrentLinkedQueue<Tree>> scoring;
 	ConcurrentLinkedQueue<Tree> temp;
-	scoring = (ConcurrentHashMap<Point, ConcurrentLinkedQueue<Tree>>) Parameter.get("shared.table");
+	//scoring = (ConcurrentHashMap<Point, ConcurrentLinkedQueue<Tree>>) Parameter.get("shared.table");
         
         for(Point p : correct) {
             setVariable("X", p.x); setVariable("Y", p.y);
             if (tree.evaluate() == 0) {
                 error++; // False Negative
-                temp = scoring.get(p);
-                if (temp == null) {
-                    temp = new ConcurrentLinkedQueue<Tree>();
-                    temp.add(tree);
-                    scoring.put(p, temp);
-                } else {
-                    temp.add(tree);
-                }               
             }
         }
         falseN = (int) error;
@@ -62,14 +53,6 @@ public class Shrubery extends eveGP.GPproblem {
             setVariable("X", p.x); setVariable("Y", p.y);
             if (tree.evaluate() == 1) {
                 error ++; // False Positive
-                temp = scoring.get(p);
-                if (temp == null) {
-                    temp = new ConcurrentLinkedQueue<Tree>();
-                    temp.add(tree);
-                    scoring.put(p, temp);
-                } else {
-                    temp.add(tree);
-                }
             }
         }
         falseP = (int) error;
@@ -91,9 +74,7 @@ public class Shrubery extends eveGP.GPproblem {
      */
     @Override
     public void setup () {
-        try {
-            Parameter.set("shared.table", new ConcurrentHashMap<Point, ConcurrentLinkedQueue<Tree>>());
-            
+        try {            
             BufferedImage global = ImageIO.read(new File("resources/boats.png"));
             BufferedImage overlay = ImageIO.read(new File("resources/boats-overlay-small.png"));
             BufferedImage edge   = ImageIO.read(new File("resources/boats-edge.png"));

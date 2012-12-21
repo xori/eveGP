@@ -2,6 +2,7 @@ package eveGP;
 
 import static eveGP.internal.Parameter.*;
 import eveGP.internal.Tree;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,9 +105,14 @@ public abstract class GPproblem implements Runnable{
         std = (float) Math.sqrt(sum / trees.length);
         
         try {
+            if (generation == 0 && 
+                    new File(getS("stats")+".txt").exists()) {
+                new File(getS("stats")+".txt").delete();
+            }
+            
             FileWriter fw = new FileWriter(getS("stats")+".txt", true);
             if (generation == 0)
-                fw.write("Generation,Best,Average,Standard Dev,Function");
+                fw.write("Generation,Best,Average,Standard Dev,Function\n");
             fw.write(generation + "," + Evolve.best.score + "," + average + "," + std + "," + Evolve.best.toString()+"\n");
             fw.close();
         } catch (IOException ex) {

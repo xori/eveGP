@@ -12,6 +12,7 @@ problem	    = A2.Shrubery
 root.result = Boolean
 
 job         = R8/G
+stats       = R8/stats
 
 function A2.func.Add (Float, Float) : Float
 function A2.func.Subtract (Float, Float) : Float
