@@ -2,6 +2,7 @@ package eveGP;
 
 import static eveGP.internal.Parameter.*;
 import eveGP.internal.Tree;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public abstract class GPproblem implements Runnable{
         String S = "Problem."+ID+"."+s;
         vars.add(S);
         set(S, o);
-        //System.out.println("SET 'Problem."+ID+"."+s+"'");
+        //System.out.println("SET 'Problem."+ID+"."+s+"' = "+o.toString());
     }
     public final void setVariable(Tree t, String s, Object o) {
         String S = "Problem."+t.ID+"."+s;
@@ -47,10 +48,10 @@ public abstract class GPproblem implements Runnable{
         vars.clear();
     }
     
-    public final Object getVariable       (String s) { return get("Problem."+thread+"."+s);}
-    public final int    getIntVariable    (String s) { return getI("Problem."+thread+"."+s);}
-    public final String getStringVariable (String s) { return getS("Problem."+thread+"."+s);}
-    public final float  getFloatVariable  (String s) { return getF("Problem."+thread+"."+s);}
+    public final Object getVariable       (String s) { return get ("Problem."+ID+"."+s);}
+    public final int    getIntVariable    (String s) { return getI("Problem."+ID+"."+s);}
+    public final String getStringVariable (String s) { return getS("Problem."+ID+"."+s);}
+    public final float  getFloatVariable  (String s) { return getF("Problem."+ID+"."+s);}
     
     /**
      * Run once before the first generation.
@@ -66,10 +67,7 @@ public abstract class GPproblem implements Runnable{
     public final void run () {
         myTree.setID(ID);
         myTree.score = evaluate(myTree);
-        for (String s : vars) {
-            remove("Problem." + thread + "." + s);
-        }
-        vars.clear();
+        cleanUpMemory();
     }
     
     
@@ -107,9 +105,19 @@ public abstract class GPproblem implements Runnable{
         std = (float) Math.sqrt(sum / trees.length);
         
         try {
+            if (generation == 0 && 
+                    new File(getS("stats")+".txt").exists()) {
+                new File(getS("stats")+".txt").delete();
+            }
+            
             FileWriter fw = new FileWriter(getS("stats")+".txt", true);
+<<<<<<< HEAD
 	    if (generation == 0)
 		fw.write("Generation,Best,Average,Standard Dev.,Best Program");
+=======
+            if (generation == 0)
+                fw.write("Generation,Best,Average,Standard Dev,Function\n");
+>>>>>>> origin/A3
             fw.write(generation + "," + Evolve.best.score + "," + average + "," + std + "," + Evolve.best.toString()+"\n");
             fw.close();
         } catch (IOException ex) {

@@ -4,3 +4,6 @@ build.xml
 manifest.mf
 /dist/
 output/*
+/data/
+/output/
+/*.txt

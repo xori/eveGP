@@ -28,7 +28,7 @@ public abstract class GPfunction implements Cloneable{
         //this.parameters = new ArrayList<GPfunction>(parameterType.size());
     }
     
-    public final Object getVariable       (String s) { return get("Problem."+ID+"."+s);}
+    public final Object getVariable       (String s) { return get ("Problem."+ID+"."+s);}
     public final int    getIntVariable    (String s) { return getI("Problem."+ID+"."+s);}
     public final String getStringVariable (String s) { return getS("Problem."+ID+"."+s);}
     public final float  getFloatVariable  (String s) { return getF("Problem."+ID+"."+s);}
