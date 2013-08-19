@@ -1,0 +1,42 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono|Roboto+Slab:400,100);
+
+body {
+    background: #CECECE;
+    font-family: 'Roboto Slab', serif;
+}
+
+code {
+    font-family: "Ubuntu Mono", sans-serif;
+}
+
+li {
+    font-weight: 100;
+}
+
+#content {
+    width: 550px;
+    margin: 2em auto auto 4em;
+    background-color: #eee;
+    padding: 1em;
+    outline: grey 1px solid;
+    box-shadow: grey 0 0 20px;
+}
+
+p {
+    font-weight: 100;
+}
+
+h1 {
+    margin-top: 0;
+    font-weight: 700;
+}
+
+h2,h3,h4,h5 {
+    font-weight: 500;
+}
+
+#lic {
+    font-size: 12px;
+    
+    text-shadow: 0 0 1px rgba(0,0,0,0.4);
+}
